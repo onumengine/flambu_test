@@ -31,11 +31,11 @@ class _HomePageState extends State<HomePage> {
       body: _fragments[_currentFragmentIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.feed),
             label: 'Dogs',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.rss_feed),
             label: 'Pic',
           ),
@@ -45,11 +45,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         onTap: (indexOfTappedItem) {
-          _currentFragmentIndex = indexOfTappedItem;
           setState(() {
-
+            _currentFragmentIndex = indexOfTappedItem;
           });
         },
+        selectedItemColor: Colors.blueAccent,
+        unselectedItemColor: Colors.grey,
       ),
     );
   }
