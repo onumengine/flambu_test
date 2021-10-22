@@ -9,7 +9,8 @@ class GetDogBreedsUseCase implements UseCase<List<DogBreedEntity>> {
 
   GetDogBreedsUseCase({required this.dogsListRepository});
 
-  Future<Either<Failure, List<DogBreedEntity>>> call() {
-    return dogsListRepository.getDogBreeds();
+  @override
+  Future<Either<Failure, List<DogBreedEntity>>> call() async {
+    return await dogsListRepository.getDogBreeds();
   }
 }
