@@ -1,6 +1,6 @@
-import 'package:flambu_test/features/dogs/presentation/ui/fragments/breeds_list_fragment.dart';
-import 'package:flambu_test/features/dogs/presentation/ui/fragments/dog_pic_fragment.dart';
-import 'package:flambu_test/features/dogs/presentation/ui/fragments/more_fragment.dart';
+import 'package:flambu_test/features/dogs/presentation/pages/fragments/breeds_list_fragment.dart';
+import 'package:flambu_test/features/dogs/presentation/pages/fragments/dog_pic_fragment.dart';
+import 'package:flambu_test/features/dogs/presentation/pages/fragments/more_fragment.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:flambu_test/features/dogs/presentation/ui/home_page.dart';
+import 'package:flambu_test/features/dogs/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,7 +7,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
