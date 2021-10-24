@@ -18,14 +18,18 @@ class BreedListLocalDataSourceImpl implements BreedListLocalDataSource {
 
   @override
   Future<DogBreedListModel> getCachedBreedList() {
-    final breedListJson = sharedPreferences.getStringList(cachedBreedList);
-    return Future.value(
-      DogBreedListModel.fromJson(
-        jsonDecode(
-          breedListJson!.toString(),
+    try {
+      final breedListJson = sharedPreferences.getStringList(cachedBreedList);
+      return Future.value(
+        DogBreedListModel.fromJson(
+          jsonDecode(
+            breedListJson!.toString(),
+          ),
         ),
-      ),
-    );
+      );
+    } on Exception {
+      throw CacheReadingException();
+    }
   }
 
   @override
