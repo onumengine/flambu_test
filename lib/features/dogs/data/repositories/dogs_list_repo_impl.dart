@@ -27,9 +27,9 @@ class DogsListRepositoryImpl implements DogsListRepository {
   Future<Either<Failure, DogBreedListEntity>> getDogBreeds() async {
     if (await networkInfo.deviceIsConnected) {
       try {
-        final DogBreedListEntity listOfBreeds =
+        final DogBreedListModel listOfBreeds =
             await remoteDataSource.getBreedList();
-        localDataSource.cacheBreedList(listOfBreeds as DogBreedListModel);
+        localDataSource.cacheBreedList(listOfBreeds);
         return Right(listOfBreeds);
       } on ServerException {
         return Left(ServerFailure());
