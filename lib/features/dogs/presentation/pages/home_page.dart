@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _fragments = <Widget>[
+    _fragments = const <Widget>[
       BreedsListFragment(),
       DogPicFragment(),
       MoreFragment(),
@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _fragments[_currentFragmentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.feed),
             label: 'Dogs',
