@@ -1,13 +1,16 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flambu_test/core/network/network_info.dart';
 import 'package:flambu_test/features/dogs/data/data_sources/breed_list_local_data_source.dart';
 import 'package:flambu_test/features/dogs/data/data_sources/breed_list_remote_data_source.dart';
+import 'package:flambu_test/features/dogs/data/data_sources/random_dog_image_remote_data_source.dart';
 import 'package:flambu_test/features/dogs/data/repositories/dogs_list_repo_impl.dart';
 import 'package:flambu_test/features/dogs/data/repositories/random_dog_image_repo_impl.dart';
 import 'package:flambu_test/features/dogs/domain/repositories/dogs_list_repository.dart';
 import 'package:flambu_test/features/dogs/domain/repositories/random_dog_image_repository.dart';
 import 'package:flambu_test/features/dogs/domain/use_cases/get_dog_breeds.dart';
 import 'package:flambu_test/features/dogs/domain/use_cases/get_random_dog_image.dart';
-import 'package:flambu_test/features/dogs/presentation/bloc/bloc.dart';
+import 'package:flambu_test/features/dogs/presentation/logic_holders/breed_list_bloc/bloc.dart';
+import 'package:flambu_test/features/dogs/presentation/logic_holders/dog_image_bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +33,12 @@ void initFeatures() {
       getRandomDogImage: serviceLocator(),
     ),
   );
-  
+  serviceLocator.registerFactory(
+    () => DogImageBloc(
+      getRandomDogImage: serviceLocator(),
+    ),
+  );
+
   // Use cases
   serviceLocator.registerLazySingleton(
     () => GetDogBreedsUseCase(
@@ -42,7 +50,7 @@ void initFeatures() {
       randomDogImageRepository: serviceLocator(),
     ),
   );
-  
+
   // Repositories
   serviceLocator.registerLazySingleton<DogsListRepository>(
     () => DogsListRepositoryImpl(
@@ -58,10 +66,23 @@ void initFeatures() {
       networkInfo: serviceLocator(),
     ),
   );
-  
+
   // Data sources
-  serviceLocator.registerLazySingleton<BreedListRemoteDataSource>(() => BreedListRemoteDataSourceImpl(client: serviceLocator(),),);
-  serviceLocator.registerLazySingleton<BreedListLocalDataSource>(() => BreedListLocalDataSourceImpl(serviceLocator(),),);
+  serviceLocator.registerLazySingleton<BreedListRemoteDataSource>(
+    () => BreedListRemoteDataSourceImpl(
+      client: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerLazySingleton<BreedListLocalDataSource>(
+    () => BreedListLocalDataSourceImpl(
+      serviceLocator(),
+    ),
+  );
+  serviceLocator.registerLazySingleton<RandomDogImageRemoteDataSource>(
+    () => RandomDogImageRemoteDataSourceImpl(
+      client: serviceLocator(),
+    ),
+  );
 }
 
 void initCore() {
@@ -75,5 +96,6 @@ void initCore() {
 Future<void> initExternal() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   serviceLocator.registerLazySingleton(() => sharedPreferences);
-  serviceLocator.registerLazySingleton(() => Client());
+  serviceLocator.registerSingleton(() => Client());
+  serviceLocator.registerLazySingleton(() => DataConnectionChecker());
 }
