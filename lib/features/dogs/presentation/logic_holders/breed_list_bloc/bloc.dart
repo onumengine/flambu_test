@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:flambu_test/core/error/failure.dart';
 import 'package:flambu_test/features/dogs/domain/entities/dog_breed_list.dart';
+import 'package:flambu_test/features/dogs/domain/entities/dog_image_link.dart';
 import 'package:flambu_test/features/dogs/domain/use_cases/get_dog_breeds.dart';
 import 'package:flambu_test/features/dogs/domain/use_cases/get_random_dog_image.dart';
-import 'package:flambu_test/features/dogs/presentation/bloc/event.dart';
-import 'package:flambu_test/features/dogs/presentation/bloc/state.dart';
+import 'package:flambu_test/features/dogs/presentation/logic_holders/breed_list_bloc/event.dart';
+import 'package:flambu_test/features/dogs/presentation/logic_holders/breed_list_bloc/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 const SERVER_FAILURE_MESSAGE = 'There has been a server failure';
@@ -20,14 +21,23 @@ class BreedListBloc extends Bloc<BreedListEvent, BreedListState> {
   BreedListBloc({
     required this.getDogBreeds,
     required this.getRandomDogImage,
-  })  : super(Empty()) {
+  }) : super(Empty()) {
     on<GetBreedList>((event, emit) async {
       emit(Loading());
-      final Either<Failure, DogBreedListEntity> result = await getBreedList();
+      final result = await getDogBreeds();
+      result.fold(
+        (failure) => emit(LoadingError()),
+        (entity) => emit(
+          Loaded(stateObject: entity),
+        ),
+      );
+    });
+    /*
+    on<GetRandomDogImageLink>((event, emit) async {
+      emit(Loading());
+      final Either<Failure, DogImageLinkEntity> result = await getRandomDogImage();
       emit(_getStateFromResult(result));
     });
-    on<GetRandomDogImageLink>((event, emit) => Empty());
-    /*
     Timer(const Duration(milliseconds: 300), () {
       add(GetBreedList());
     });
@@ -37,9 +47,15 @@ class BreedListBloc extends Bloc<BreedListEvent, BreedListState> {
   /// What I need is a method that calls the use case and if it returns an error,
   /// it returns an ErrorState but if successful, it returns a Loaded state
 
+  /*
   Future<Either<Failure, DogBreedListEntity>> getBreedList() async {
     final Either<Failure, DogBreedListEntity> result = await getDogBreeds();
     return result;
+  }
+
+  Future<Either<Failure, DogImageLinkEntity>> getRandomDogImageLink() async {
+    final Either<Failure, DogImageLinkEntity> dogImageLinkEntity = await getRandomDogImage();
+    return dogImageLinkEntity;
   }
 
   BreedListState _getStateFromResult(dynamic result) {
@@ -52,6 +68,8 @@ class BreedListBloc extends Bloc<BreedListEvent, BreedListState> {
         return Empty();
     }
   }
+
+   */
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {

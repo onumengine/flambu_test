@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:flambu_test/core/error/failure.dart';
+import 'package:flambu_test/features/dogs/domain/entities/dog_breed_list.dart';
 
 abstract class BreedListState extends Equatable {
   @override
@@ -10,19 +12,13 @@ class Empty extends BreedListState {}
 class Loading extends BreedListState {}
 
 class Loaded extends BreedListState {
-  final List<String> listOfBreeds;
+  final DogBreedListEntity stateObject;
 
-  Loaded({required this.listOfBreeds});
+  Loaded({required this.stateObject});
 
   @override
-  List<Object?> get props => [listOfBreeds];
+  List<Object?> get props => [stateObject];
 }
 
 class LoadingError extends BreedListState {
-  final String errorMessage;
-
-  LoadingError({required this.errorMessage});
-
-  @override
-  List<Object?> get props => [errorMessage];
 }
