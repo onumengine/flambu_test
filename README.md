@@ -11,3 +11,11 @@ This app fetches dog breeds and a random dog picture from an API
 5. Second tab should contain the random dog pic
 6. Third tab should contain some text
 7. Should be built with clean architecture
+
+
+## Instructions
+
+The dependency, *data_connection_checker*, does not support null safety so
+to run this app, use the command below in a bash terminal
+
+>flutter run --no-sound-null-safety
