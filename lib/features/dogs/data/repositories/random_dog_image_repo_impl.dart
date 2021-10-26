@@ -8,12 +8,12 @@ import 'package:flambu_test/features/dogs/data/models/dog_image_link_model.dart'
 import 'package:flambu_test/features/dogs/domain/entities/dog_image_link.dart';
 import 'package:flambu_test/features/dogs/domain/repositories/random_dog_image_repository.dart';
 
-class RandomDogImageRepoImpl implements RandomDogImageRepository {
+class RandomDogImageRepositoryImpl implements RandomDogImageRepository {
   final RandomDogImageRemoteDataSource remoteDataSource;
   final DogImageLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
-  RandomDogImageRepoImpl({
+  RandomDogImageRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
